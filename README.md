@@ -3,7 +3,7 @@ adapter-swift-mailer
 
 Sending emails
 --------------
-
+```php
 <?php
 
 use Butterfly\Adapter\SwiftMailer\Mailer;
@@ -26,21 +26,24 @@ $mailer->sendPrepared('hello.world', array(
 
 
 $mailer->flush();
-
+```
 
 Base template
 -------------
-\#base.xml.twig
+```
+#base.xml.twig
 
 <?xml version="1.0" encoding="utf-8" ?>
 <message>
     <subject><![CDATA[{% block subject %}{% endblock %}]]></subject>
     <body><![CDATA[{% block body %}{% endblock %}]]></body>
 </message>
+```
 
 Configuration
 -------------
 
+```
 bfy_adapter.twig.template_paths:
   - '%app.dir.root%/view/'
 
@@ -95,3 +98,4 @@ services:
     arguments: [@bfy_adapter.twig.loader, %bfy_adapter.twig.configuration%]
     calls:
       - ['setExtensions', [#bfy_adapter.twig.extensions/toArray]]
+```
