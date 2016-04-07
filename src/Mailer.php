@@ -213,12 +213,15 @@ class Mailer
      * @param int $messageLimit
      * @param int $timeLimit
      * @param int $recoverLimit
+     * @return int
      */
     public function flush($messageLimit = 0, $timeLimit = 0, $recoverLimit = 0)
     {
         $messageLimit = (int)$messageLimit;
         $timeLimit    = (int)$timeLimit;
         $recoverLimit = (int)$recoverLimit;
+
+        $countMessages = 0;
 
         foreach ($this->spools->getServicesIds() as $spoolName) {
             /** @var Swift_Mailer $spoolMailer */
@@ -240,8 +243,10 @@ class Mailer
             $transportName     = $this->getTransportNameBySpoolName($spoolName);
             $transportHandlder = $this->getTransport($transportName)->getTransport();
 
-            $spool->flushQueue($transportHandlder);
+            $countMessages += $spool->flushQueue($transportHandlder);
         }
+
+        return $countMessages;
     }
 
     /**
