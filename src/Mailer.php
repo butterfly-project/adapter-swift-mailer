@@ -20,6 +20,7 @@ class Mailer
     const PARAMETER_CONTENT_TYPE    = 'content_type';
     const PARAMETER_CHARSET         = 'charset';
     const PARAMETER_ENCRYPTION      = 'encryption';
+    const PARAMETER_ATTACHMENTS     = 'attachments';
 
     const ENCRYPTION_TLS = 'tls';
     const ENCRYPTION_SSL = 'ssl';
@@ -83,6 +84,12 @@ class Mailer
         $message->setTo($this->getMailParameter($mailConfig, self::PARAMETER_TO));
         $message->setContentType($this->getMailParameterOrDefault($mailConfig, self::PARAMETER_CONTENT_TYPE, self::DEFAULT_CONTENT_TYPE));
         $message->setCharset($this->getMailParameterOrDefault($mailConfig, self::PARAMETER_CHARSET, self::DEFAULT_CHARSET));
+
+        $attachments = $this->getMailParameterOrDefault($mailConfig, self::PARAMETER_ATTACHMENTS, []);
+
+        foreach ($attachments as $filePath) {
+            $message->attach(\Swift_Attachment::fromPath($filePath));
+        }
 
         return $this->send($this->getMailParameter($mailConfig, self::PARAMETER_TRANSPORT), $message);
     }
@@ -237,10 +244,10 @@ class Mailer
                 $spool->recover($recoverLimit);
             }
 
-            $transportName     = $this->getTransportNameBySpoolName($spoolName);
-            $transportHandlder = $this->getTransport($transportName)->getTransport();
+            $transportName    = $this->getTransportNameBySpoolName($spoolName);
+            $transportHandler = $this->getTransport($transportName)->getTransport();
 
-            $spool->flushQueue($transportHandlder);
+            $spool->flushQueue($transportHandler);
         }
     }
 
