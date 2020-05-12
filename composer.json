@@ -11,9 +11,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=7.*",
 
-        "swiftmailer/swiftmailer": "~5.0",
+        "swiftmailer/swiftmailer": "~6.2",
         "butterfly/interfaces-template-render": "~1.0"
     },
     "require-dev": {
