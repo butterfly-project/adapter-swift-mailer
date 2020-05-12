@@ -18,9 +18,8 @@
     },
     "require-dev": {
         "butterfly/packages": "*",
-        "butterfly/adapter-twig": "1.3.x"
+        "butterfly/adapter-twig": "*"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Butterfly\\Adapter\\SwiftMailer\\": "src/",
