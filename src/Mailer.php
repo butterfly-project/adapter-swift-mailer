@@ -76,7 +76,7 @@ class Mailer
         $xmlTemplateStr = $this->render->render($this->getMailParameter($mailConfig, self::PARAMETER_TEMPLATE), $templateParameters);
         list($subject, $body) = $this->parseXmlTemplate($xmlTemplateStr);
 
-        $message = Swift_Message::newInstance();
+        $message = new Swift_Message();
 
         $message->setSubject($subject);
         $message->setBody($body);
